@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Edit Profile</title>
+
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter@3.15.4/css/inter.css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Judson&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Julee&display=swap" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+      <style>
+            body {
+                  font-family: Arial, sans-serif;
+                  background-color: #f4f4f4;
+                  margin: 0;
+                  padding: 0;
+            }
+
+            /* .container {
+                  max-width: 800px;
+                  margin: 50px auto;
+                  padding: 20px;
+                  background-color: #fff;
+                  border-radius: 8px;
+                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            } */
+
+            h1 {
+                  text-align: center;
+            }
+
+            form {
+                  max-width: 600px;
+                  margin: 0 auto;
+            }
+
+            label {
+                  display: block;
+                  margin-bottom: 5px;
+                  font-weight: bold;
+            }
+
+            input[type="text"],
+            input[type="tel"],
+            select {
+                  width: 100%;
+                  padding: 10px;
+                  margin-bottom: 20px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                  box-sizing: border-box;
+            }
+
+            button[type="submit"] {
+                  display: block;
+                  width: 100%;
+                  padding: 10px;
+                  background-color: #4caf50;
+                  color: #fff;
+                  border: none;
+                  border-radius: 5px;
+                  cursor: pointer;
+                  font-size: 16px;
+            }
+
+            button[type="submit"]:hover {
+                  background-color: #45a049;
+            }
+      </style>
+</head>
+
+<body>
+      <div class="container">
+            <img class="svg" src="/static/images/Rectangle.png" alt="SVG image">
+            <header>
+                  <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+
+                  <div class="navbar">
+                        <a href="/farmer/{{ session['farmer_id'] }}"><i class="fa-solid fa-arrow-left"></i></a>
+                  </div>
+            </header>
+
+            <div class="farmer_container">
+        
+            <h1>Edit Profile</h1>
+            <form action="{{ url_for('update_profile', farmer_id=farmer_details.farmer_id) }}" method="POST" style="width: 90%;">
+                  <div style="display: flex;">
+                  <div style="width: 50%;">
+                  <label for="name">Name of the Farmer:</label>
+                  <input type="text" id="name" name="name" value="{{ farmer_details.name }}" pattern="^[a-zA-Z]+ [a-zA-Z]+$" required />
+                  </div>
+
+                  <div style="width: 50%;">
+                  <label for="phone">Phone Number:</label>
+                  <input type="tel" id="phone" name="phone" value="{{ farmer_details.phone }}" pattern="[0-9]{10}"
+                        required /></div>
+
+                        <div style="width: 50%;">
+                  <label for="taluka">Taluka:</label>
+                  <select id="taluka" name="taluka" required>
+                        <option value="{{ farmer_details.taluka }}">{{ farmer_details.taluka }}</option>
+                        <option value="Pernem">Pernem</option>
+                        <option value="Bardez">Bardez</option>
+                        <option value="Bicholim">Bicholim</option>
+                        <option value="Sattari">Sattari</option>
+                        <option value="Tiswadi">Tiswadi</option>
+                        <option value="Ponda">Ponda</option>
+                        <option value="Mormugao">Mormugao</option>
+                        <option value="Salcete">Salcete</option>
+                        <option value="Sanguem">Sanguem</option>
+                        <option value="Quepem">Quepem</option>
+                        <option value="Dharbandora">Dharbandora</option>
+                        <option value="Canacona">Canacona</option>
+                    </select></div>
+                    </div>
+                  <!-- <input type="text" id="taluka" name="taluka" value="{{ farmer_details.taluka }}" required /> -->
+
+                  <div style="display: flex;">
+                        <div style="width: 50%;">
+                  <label for="revenue_village">Revenue Village:</label>
+                  <select id="revenue_village" name="revenue_village" required>
+                        <option value="{{ farmer_details.revenue_village }}">{{ farmer_details.revenue_village }}</option>
+                    </select></div>
+
+                  <!-- <input type="text" id="revenue_village" name="revenue_village"
+                        value="{{ farmer_details.revenue_village }}" required /> -->
+
+                        <div style="width: 50%;">
+                  <label for="village_panchayat">Village Panchayat:</label>
+                  <input type="text" id="village_panchayat" name="village_panchayat"
+                        value="{{ farmer_details.village_panchayat }}" /></div>
+
+                        <div style="width: 50%;">
+                  <label for="ward">Ward:</label>
+                  <input type="text" id="ward" name="ward" value="{{ farmer_details.ward }}" /></div>
+                  </div>
+
+
+                  <div style="display: flex;">
+                        <div style="width: 50%;">
+                  <label for="location_description">Description of location:</label>
+                  <select id="location_description" name="location_description">
+                        <option value="Low land" {% if farmer_details.location_description=='Low land' %} selected {%
+                              endif %}>Low land</option>
+                        <option value="Mid land" {% if farmer_details.location_description=='Mid land' %} selected {%
+                              endif %}>Mid land</option>
+                        <option value="Up land" {% if farmer_details.location_description=='Up land' %} selected {%
+                              endif %}>Up land</option>
+                  </select></div>
+
+                  <div style="width: 50%;">      
+                  <label for="category">Category:</label>
+                  <select id="category" name="category">
+                        <option value="SC" {% if farmer_details.category=='SC' %} selected {% endif %}>SC</option>
+                        <option value="ST" {% if farmer_details.category=='ST' %} selected {% endif %}>ST</option>
+                        <option value="OBC" {% if farmer_details.category=='OBC' %} selected {% endif %}>OBC</option>
+                        <option value="General" {% if farmer_details.category=='General' %} selected {% endif %}>General
+                        </option>
+                  </select></div>
+
+                  <div style="width: 50%;">
+                  <label for="analysis_required">Analysis required:</label>
+                  <select id="analysis_required" name="analysis_required">
+                        <option value="Major" {% if farmer_details.analysis_required=='Major' %} selected {% endif %}>
+                              Major</option>
+                        <option value="Micro" {% if farmer_details.analysis_required=='Micro' %} selected {% endif %}>
+                              Micro</option>
+                        <option value="Both" {% if farmer_details.analysis_required=='Both' %} selected {% endif %}>Both
+                        </option>
+                  </select></div>
+                  </div>
+
+                  <div style="display: flex;">
+                        <div style="width: 50%;">
+                  <label for="aadhaar_no">Aadhaar No.:</label>
+                  <input type="text" id="aadhaar_no" name="aadhaar_no" value="{{ farmer_details.aadhaar_no }}" /></div>
+
+                  <div style="width: 50%;">
+                  <label for="registration_no">Farmer's Registration No.:</label>
+                  <input type="text" id="registration_no" name="registration_no"
+                        value="{{ farmer_details.farmer_id }}" /></div>
+
+                        <div style="width: 50%;">
+                  <label for="area">Area (in m2/Hactare):</label>
+                  <input type="text" id="area" name="area" value="{{ farmer_details.area }}" /></div>
+                  </div>
+
+                  <button style="width: 100px;margin-left: 600px;" type="submit">SUBMIT</button>
+            </form>
+            <img class="bottom_pic" src="/static/images/background.png" />
+            
+            <footer>
+                  &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
+                  <br />
+                  <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a> |
+                  <a href="#">Terms of Service</a>
+              </footer>
+      </div>
+      </div>
+      <script src="/static/js/script.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fertilizer Type Selection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter@3.15.4/css/inter.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Judson&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Julee&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+
+<body>
+    <div class="container">
+        <img class="svg" src="/static/images/Rectangle.png" alt="SVG image" />
+        <header>
+            <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+
+            <div class="navbar">
+                <a href="/recommendation"><i class="fa-solid fa-arrow-left"></i></a>
+            </div>
+        </header>
+        <h1>Select Type of Fertilizer</h1>
+        <div class="options">
+            <div class="optionFertilizer">
+                <img src="/static/images/OrganicFertilizer.jpg" alt="Organic Fertilizer" />
+                <h1>Organic Fertilizer</h1>
+                <p>Choose organic fertilizers for eco-friendly farming practices.</p>
+                <a href="/Fertilizer">Organic Fertilizers</a>
+            </div>
+            <div class="optionFertilizer">
+                <img src="/static/images/ChemicalFertilizer.jpg" alt="Chemical Fertilizer" />
+                <h1>Chemical Fertilizer</h1>
+                <p>Opt for chemical fertilizers for rapid plant growth and yield.</p>
+                <a href="/ChemicalFertilizer">Chemical Fertilizers</a>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
+            <br />
+            <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a>
+        </footer>
+    </div>
+    <script src="/static/js/script.js" defer></script>
+</body>
+
+</html>

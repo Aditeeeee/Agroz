@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pesticide Recommendation Result</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter@3.15.4/css/inter.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Judson&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Julee&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" />
+</head>
+
+<body>
+  <div class="container">
+    <img class="svg" src="/static/images/Rectangle.png" alt="SVG image" />
+    <header>
+      <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+
+      <div class="navbar">
+      </div>
+    </header>
+
+    <h1 style="font-size: 20px;margin-left: 20px;">PESTICIDE RECOMMENDATION RESULT</h1>
+      <h2>{{image_path}}</h2>
+    <div class="conall">
+       <div class="onecon">
+        <h1 style="margin-top: 150px;">Disease Result:</h1>
+        <h2 style="margin-top: 20px;"> {{ corrected_result }}</h2>
+       </div>
+       <div class="twocon">
+        {% if image_url %}
+          <img src="{{ image_url }}" alt="Disease Image" style="width:400px;height: 350px;margin-top: 5px;">
+        {% endif %}
+       </div>
+    </div>
+    
+    <a href="/plantdisease"><button style="height: 30px;background-color: #4caf50;border-radius: 6px;color: aliceblue;border-color: none;border: none;margin-top: 20px;;">Back to Recommendation</button></a>
+    <!-- <div class="crop_container">
+      <h1 style="font-size: 20px;">PESTICIDE RECOMMENDATION RESULT</h1>
+      <h2>{{image_path}}</h2>
+      <div class="container_Result">
+        <div class="result">
+          <div class="crop-info">
+            <h1>Disease Result: {{ corrected_result }}</h1>
+          </div>
+        </div>
+        <div class="image">
+          {% if image_url %}
+          <img src="{{ image_url }}" alt="Disease Image" style="height: 400px;">
+          {% endif %}
+        </div>
+      </div>
+      <a href="/plantdisease"><button style="height: 30px;background-color: #4caf50;border-radius: 6px;color: aliceblue;border-color: none;border: none;margin-top: 210px;">Back to Recommendation</button></a>
+    </div> -->
+
+    <footer>
+      &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
+      <br />
+      <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a> |
+      <a href="#">Terms of Service</a>
+    </footer>
+  </div>
+  <script src="/static/js/script.js" defer></script>
+</body>
+
+</html>

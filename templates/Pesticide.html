@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Pesticide Recommendation</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter@3.15.4/css/inter.css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Judson&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Julee&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    </head>
+    
+    <body>
+      <div class="container">
+        <img class="svg" src="/static/images/Rectangle.png" alt="SVG image" />
+        <header>
+          <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+    
+          <div class="navbar">
+            <a href="/recommendation"><i class="fa-solid fa-arrow-left"></i></a>
+          </div>
+        </header>
+
+        <h1 style="font-size: 30px;margin-bottom: 20px;margin-top: -50px;">PESTICIDE</h1>
+        <div class="conall" style="width: 1100px;margin-left: 200px;height: 500px;">
+          <div class="onecon" style="padding: 20px;">
+            <img src="/static/images/pest.png.jpg" alt="Description" style="width:400px;height: 440px;" />
+          </div>
+          <div class="twocon" style="width: 50%;">
+        <form id="pesticideForm" action="/plantdisease" method="post" enctype="multipart/form-data" style="margin-left:-120px ;height: 440px;">
+        
+          <div style="margin-top: 150px;">
+        <label for="pestImage" style="margin-left: 90px;">Upload Image Of Pest or Leaf</label><br><br>
+        <input id="pestImage" type="file" name="file" accept=".png, .jpg, .jpeg, .gif" required style="color:black; background-color: #d1ebd1; border-color: #4CAF50; padding: 5px; border-radius: 5px;"/>
+       
+        <div class="file-name" id="fileNamePlaceholder"></div><br>
+
+        <button type="submit" style="width: 180px;">Get Recommendation</button>
+      </div>
+    </form>
+    </div>
+    </div>
+
+
+    <footer>
+        &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
+        <br />
+        <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a> |
+        <a href="#">Terms of Service</a>
+      </footer>
+  </div>
+
+  <script src="/static/js/script.js" defer></script>
+</body>
+
+</html>

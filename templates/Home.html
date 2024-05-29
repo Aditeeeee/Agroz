@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farmer Information</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter@3.15.4/css/inter.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Judson&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Julee&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+    <script>
+        function confirmdelete(){
+          confirm("Are you sure you want to delete farmers details?")
+        }
+
+        function printPage(ids) {
+    // Save the current content of the page
+    var originalContent = document.body.innerHTML;
+
+    // Remove background designs and styles
+    var content = '<div class="container">';
+    ids.forEach(function(id) {
+        var table = document.getElementById(id);
+        if (table) {
+            content += '<section>' +
+                           '<h1>' + table.parentElement.querySelector('h1').innerText + '</h1>' +
+                           '<table id="' + id + '">' + table.innerHTML + '</table>' +
+                       '</section>';
+        }
+    });
+    content += '</div>';
+
+    // Replace the current content with recommendation history tables
+    document.body.innerHTML = content;
+
+    // Print the page
+    window.print();
+
+    // Restore the original content
+    document.body.innerHTML = originalContent;
+}
+
+
+
+ 
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <img class="svg" src="/static/images/Rectangle.png" alt="SVG image">
+        <header>
+            <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+
+            <div class="navbar">
+                <a href="/farmer/{{ session['farmer_id'] }}" class="active"><i class="fa-solid fa-user"></i> Profile</a>
+                <a href="/recommendation"><i class="fa-solid fa-thumbs-up"></i> Recommendation</a>
+                <a href="/logoutFarmer"><i class="fa-solid fa-arrow-left"></i> Exit</a>
+            </div>
+        </header>
+        <section>
+          <h1 style="font-size: 40px;">FARMER PROFILE</h1>
+          <div class="profile-details">
+            <table id="farmerTable">
+                {% for key, value in farmer_details.items() %}
+                    {% if key not in ['id', columns[0] ,columns[1]] %}
+                        <tr>
+                            <td><strong>{{ key.title() }}</strong></td>
+                            <td>{{ value }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+              <a class="edit-profile-link animated-left" href="{{ url_for('edit_profile', farmer_id=farmer_details.farmer_id) }}">Edit Profile</a>
+              <a onclick="confirmdelete()" class="edit-profile-link animated-left" href="{{ url_for('delete', farmer_id=farmer_details.farmer_id) }}">Delete</a>
+          </div>
+          <!-- Button to trigger printing -->
+          <!-- <button onclick="printTable()">Print</button> -->
+      </section>
+      <br>
+        <section>
+          <div style="display: flex;">
+            <div style="width: 50%;margin-left: 600px;"><a style="color: black;text-decoration: none;font-size: 20px;font-weight: bold;">RECOMMENDATION</a></div>
+            <div style="width: 50%;margin-left: 200px;"><a style="color: black;text-decoration: none;font-size: 20px; " onclick="printPage(['cropid', 'ofertid', 'cfertid', 'pesticideid'])"><i class="fa-solid fa-download"></i></a></div>
+            </div>
+            <br>
+            <div class="crop">
+          {% if crop_history or fertilizer_history or Chemfertilizer_history or pesticide_history %}
+          {% if crop_history %}
+            <h1 >CROP RECOMMENDATION HISTORY</h1>
+            <!-- <button onclick="printTable()">Print</button> -->
+            <table id="cropid">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Nitrogen (N)</th>
+                        <th>Phosphorus (P)</th>
+                        <th>Potassium (K)</th>
+                        <th>Temperature (°C)</th>
+                        <th>Humidity (%)</th>
+                        <th>pH Level</th>
+                        <th>Rainfall (mm)</th>
+                        <th>Recommended Crop</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      {% for history_record in crop_history %}
+                        <td>{{ history_record[10] }}</td>
+                        <td>{{ history_record[2] }}</td>
+                        <td>{{ history_record[3] }}</td>
+                        <td>{{ history_record[4] }}</td>
+                        <td>{{ history_record[5] }}</td>
+                        <td>{{ history_record[6] }}</td>
+                        <td>{{ history_record[7] }}</td>
+                        <td>{{ history_record[8] }}</td>
+                        <td>{{ history_record[9] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+        </section>
+        <br>
+        <section>
+            <div class="ofert">
+          {% if fertilizer_history %}
+            <h1>ORGANIC FERTILIZER RECOMMENDATION HISTORY</h1>
+            <table id="ofertid">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Nitrogen (N)</th>
+                        <th>Phosphorus (P)</th>
+                        <th>Potassium (K)</th>
+                        <th>Crop</th>
+                        <th>Nitrogen Recommendation</th>
+                        <th>Phosphorus Recommendation</th>
+                        <th>Potassium Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      {% for record in fertilizer_history %}
+                        <td>{{ record[9] }}</td>
+                        <td>{{ record[3] }}</td>
+                        <td>{{ record[4] }}</td>
+                        <td>{{ record[5] }}</td>
+                        <td>{{ record[2] }}</td>
+                        <td>{{ record[6] }}</td>
+                        <td>{{ record[7] }}</td>
+                        <td>{{ record[8] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+        </section>
+        <section>
+            <div class="cfert">
+          {% if Chemfertilizer_history %}
+            <h1>CHEMICAL FERTILIZER RECOMMENDATION HISTORY</h1>
+            <table id="cfertid">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Nitrogen (N)</th>
+                        <th>Phosphorus (P)</th>
+                        <th>Potassium (K)</th>
+                        <th>pH</th>
+                        <th>Rainfall</th>
+                        <th>Temperature</th>
+                        <th>Crop</th>
+                        <th>Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      {% for record in Chemfertilizer_history %}
+                        <td>{{ record[10] }}</td>
+                        <td>{{ record[3] }}</td>
+                        <td>{{ record[4] }}</td>
+                        <td>{{ record[5] }}</td>
+                        <td>{{ record[6] }}</td>
+                        <td>{{ record[7] }}</td>
+                        <td>{{ record[8] }}</td>
+                        <td>{{ record[2] }}</td>
+                        <td>{{ record[9] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+        </section>
+        <section>
+            <div class="pesticide">
+            {% if pesticide_history %}
+              <h1>PESTICIDE RECOMMENDATION HISTORY</h1>
+              <table id="pesticideid">
+                  <thead>
+                      <tr>
+                          <th>Date</th>
+                          <th>Pest</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                        {% for record in pesticide_history %}
+                          <td>{{ record[3] }}</td>
+                          <td>{{ record[2] }}</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+              {% endif %}
+              {% else %}
+                <h1>No recommendation history yet</h1>
+              {% endif %}
+            </div>
+          </section>
+        <br>
+        
+        <br><br><br><br><br>
+    </div>
+    <img style="height: 200px;" class="bottom_pic" src="/static/images/background.png" />
+    <footer style="position: fixed;">
+      &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
+      <br />
+      <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a> |
+      <a href="#">Terms of Service</a>
+    </footer>
+
+</body>
+
+</html>

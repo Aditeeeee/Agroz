@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroZ SignUp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body style="position: fixed;">
+    <div class="container">
+        <img class="svg" src="/static/images/Rectangle.png" alt="SVG image">
+        <header>
+            <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+
+            <div class="navbar">
+                <a href="/" ><i class="fa fa-home"></i> Home</a>
+                <a href="/Login"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+                <a href="/SignUp" class="active"><i class="fa-solid fa-user-plus"></i> Signup</a>
+            </div>
+        </header>
+        <!-- <img src="/static/images/signup_login.png" alt="Description of the image" /> -->
+
+        <div class="signup-login_container" style="width: 500px;top: 400px;">
+            <h1 class="signup-login">SIGNUP</h1>
+            <br>
+            <form action="http://127.0.0.1:5000/handles_signup" method="post">
+                {% if serror %}
+                <p class="error-message">{{ serror }}</p>
+                <br />
+                {% endif %}
+                <input type="text" name="username" placeholder="Name" pattern="^[a-zA-Z]+ [a-zA-Z]+$" required>
+                <br>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <br>
+                <div class="password-container">
+                    <input type="password" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Password" required />
+                    <i id="eye" class="fas fa-eye" style="color: black;"></i> </div>
+                <br>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                <br>
+                <br />
+                {% if error_pass %}
+                <p class="error-message">{{ error_pass }}</p>
+                <br />
+                {% endif %}
+                <input type="submit" value="Sign Up">
+            </form>
+            <a href="/Login" class="existing-user">Existing User? Login</a>
+        </div>
+        <script>
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye');
+      
+            eyeIcon.addEventListener('click', () => {
+              if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye'); // Change to closed eye icon
+                eyeIcon.classList.add('fa-eye-slash');
+              } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash'); // Change to open eye icon
+                eyeIcon.classList.add('fa-eye');
+              }
+            });
+          </script>
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Farmer Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter@3.15.4/css/inter.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Judson&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Julee&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body style="position: fixed;">
+    <div class="container">
+        <img class="svg" src="/static/images/Rectangle.png" alt="SVG image" />
+        <header>
+            <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+            {% if category == 'success' %}
+            <div class="success-message-box">
+                <b><p style="font-size: larger;margin-bottom: 20px;">{{message}}</p></b>
+                <span class="close-button" onclick="this.parentElement.style.display='none';">&times;</span>
+            </div>
+           {% endif %}
+           {% endfor %}
+           {% endwith %}
+            <div class="navbar">
+                <a href="/AO"><i class="fa fa-home"></i> Home</a>
+                <a href="/Add_NewFarmer" class="active"><i class="fa-solid fa-user-plus"></i> Farmer</a>
+                <a href="/Farmer_List"><i class="fa-solid fa-list"></i> List</a>
+                <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+            </div>
+        </header>
+
+        <div class="farmer_container">
+            <h2>ENTER FARMER DETAILS</h2>
+            <form action="/handle_farmer_details" method="POST" style="width: 90%;">
+                <br>
+                {% if serror %}
+                <p class="error-message">{{ serror }}</p>
+                <br />
+                {% endif %}
+            <div style="display: flex;">
+                <div style="width: 50%;">
+                <label for="name" style="margin-right: 250px;">Name of the Farmer</label><br><br>
+                <input type="text" id="name" name="name" pattern="^[a-zA-Z]+ [a-zA-Z]+$" required/>
+                </div>
+
+                 <div style="width: 50%;">
+                <label for="phone" style="margin-right: 290px;">Phone Number</label><br><br>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required /> 
+                <br>
+                {% if perror %}
+                <p class="error-message">{{ perror }}</p>
+                <br />
+                {% endif %}
+               </div>
+
+                <div style="width: 50%;">
+                <label for="taluka" style="margin-right: 350px;">Taluka</label><br><br>
+                <select id="taluka" name="taluka" required>
+                    <option value="">Select Taluka</option>
+                    <option value="Pernem">Pernem</option>
+                    <option value="Bardez">Bardez</option>
+                    <option value="Bicholim">Bicholim</option>
+                    <option value="Sattari">Sattari</option>
+                    <option value="Tiswadi">Tiswadi</option>
+                    <option value="Ponda">Ponda</option>
+                    <option value="Mormugao">Mormugao</option>
+                    <option value="Salcete">Salcete</option>
+                    <option value="Sanguem">Sanguem</option>
+                    <option value="Quepem">Quepem</option>
+                    <option value="Dharbandora">Dharbandora</option>
+                    <option value="Canacona">Canacona</option>
+                </select>
+                </div>
+            </div>
+            <br>
+            <div style="display: flex;">
+                <div style="width: 50%;">
+                <label for="revenue_village" style="margin-right: 280px;">Revenue Village</label><br><br>
+                <select id="revenue_village" name="revenue_village" required>
+                    <option value="">Select Taluka first</option>
+                </select>
+                </div>
+                <div style="width: 50%;">
+                <label for="village_panchayat" style="margin-right: 280px;">Village Panchayat</label><br><br>
+                <input type="text" id="village_panchayat" pattern="^[a-zA-Z\s-]+$" name="village_panchayat" required />
+                </div>
+
+                <div style="width: 50%;">
+                <label for="ward" style="margin-right: 360px;">Ward</label><br><br>
+                <input type="text" id="ward" name="ward" pattern="[0-9]+" required/>
+                </div>
+            </div> 
+
+            <br>
+            <div style="display: flex;">
+                <div style="width: 50%;">
+                <label for="location_description" style="margin-right: 240px;">Description of location</label><br><br>
+                <select id="location_description" name="location_description" required>
+                    <option value="Low land" {% if location_description=='Low land' %} selected {%
+                        endif %}>Low land</option>
+                  <option value="Mid land" {% if location_description=='Mid land' %} selected {%
+                        endif %}>Mid land</option>
+                  <option value="Up land" {% if location_description=='Up land' %} selected {%
+                        endif %}>Up land</option>
+                </select>
+                </div>
+
+                <div style="width: 50%;">
+                <label for="category" style="margin-right: 340px;">Category</label><br><br>
+                <select id="category" name="category">
+                    <option value="SC" {% if category=='SC' %} selected {% endif %}>SC</option>
+                    <option value="ST" {% if category=='ST' %} selected {% endif %}>ST</option>
+                    <option value="OBC" {% if category=='OBC' %} selected {% endif %}>OBC</option>
+                    <option value="General" {% if category=='General' %} selected {% endif %}>General</option>
+                </select>
+                </div>
+
+                <div style="width: 50%;">
+                <label for="analysis_required" style="margin-right: 270px;">Analysis required</label><br><br>
+                <select id="analysis_required" name="analysis_required" required>
+                    <option value="Major" {% if analysis_required=='Major' %} selected {% endif %}> Major</option>
+                  <option value="Micro" {% if analysis_required=='Micro' %} selected {% endif %}> Micro</option>
+                  <option value="Both" {% if analysis_required=='Both' %} selected {% endif %}>Both </option>
+                </select>
+                </div>
+            </div>
+            <br>
+
+            <div style="display: flex; margin-left: 70px;">
+                <div style="width: 50%;">
+                <label for="aadhaar_no" style="margin-right: 260px;">Aadhaar No.</label><br><br>
+                <input type="text" id="aadhaar_no" name="aadhaar_no" pattern="^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$" value="{{aadhaar_no}}" style="width: 60%;"/>
+                {% if aerror %}
+                <p class="error-message">{{ aerror }}</p>
+                <br />
+                {% endif %}
+                </div>
+
+                <div style="width: 50%;">
+                <label for="area" style="margin-right: 200px;">Area (in m2/Hactare)</label><br><br>
+                <input type="text" id="area" name="area" pattern="[0-9]+" required style="width: 60%;"/>
+                </div>
+            </div>
+            <br>
+
+                <button type="submit">SUBMIT</button>
+            </form>
+            <img class="bottom_pic" src="/static/images/background.png" />
+            <footer>
+                &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
+                <br />
+                <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a> |
+                <a href="#">Terms of Service</a>
+            </footer>
+        </div>
+    </div>
+    <script src="/static/js/script.js" defer></script>
+</body>
+
+</html>

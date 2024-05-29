@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Recommendations</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter@3.15.4/css/inter.css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Judson&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Julee&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+
+<body>
+      <div class="container">
+            <img class="svg" src="/static/images/Rectangle.png" alt="SVG image" />
+            <header>
+                  <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+
+                  <div class="navbar">
+                        <a href="/farmer/{{ session['farmer_id'] }}"><i class="fa-solid fa-user"></i> Profile</a>
+                        <a href="/recommendation" class="active"><i class="fa-solid fa-thumbs-up"></i> Recommendation</a>
+                        <a href="/logoutFarmer"><i class="fa-solid fa-arrow-left"></i> Exit</a>
+                  </div>
+            </header>
+            <div class="options">
+                  <div class="optionFertilizer">
+                        <img src="/static/images/crop.png" alt="Crop" />
+                        <h1>Crop</h1>
+                        <p>Personalized crop recommendations for Indian farmers, ensuring optimal choices for increased productivity and prosperity.</p>
+                        <a href="/Crop">Recommend</a>
+                  </div>
+
+                  <div class="optionFertilizer">
+                        <img src="/static/images/fertilizer.png" alt="Fertilizer" />
+                        <h1>Fertilizer</h1>
+                        <p>Input your crop, receive tailored fertilizer recommendations both organic and chemical for optimal yield.</p>
+                        <a href="/Fertilizer_Option_Page">Recommend</a>
+                  </div>
+
+                  <div class="optionFertilizer">
+                        <img src="/static/images/pesticide.png" alt="Pesticide" />
+                        <h1>Pesticide</h1>
+                        <p>Snap, Detect, Protect. Upload pest images; we'll identify and recommend the right pesticide for your crops.</p>
+                        <a href="/plantdisease">Recommend</a>
+                  </div>
+            </div>
+            <br><br>
+            <br><br>            <br><br>
+            <footer>
+                  &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
+                  <br />
+                  <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a> |
+                  <a href="#">Terms of Service</a>
+            </footer>
+      </div>
+      <script src="/static/js/script.js" defer></script>
+</body>
+
+</html>

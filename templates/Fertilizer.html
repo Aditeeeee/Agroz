@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Organic Fertilizer Recommendation</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter@3.15.4/css/inter.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Judson&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Julee&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body style="position: fixed;">
+  <div class="container">
+    <img class="svg" src="/static/images/Rectangle.png" alt="SVG image" />
+    <header>
+      <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+
+      <div class="navbar">
+        <a href="/Fertilizer_Option_Page"><i class="fa-solid fa-arrow-left"></i></a>
+      </div>
+    </header>
+
+
+        <h1 style="font-size: 30px;margin-bottom: 20px;margin-top: -50px;">ORGANIC FERTILIZER</h1>
+        <div class="conall" style="width: 1100px;margin-left: 200px;height: 500px;">
+          <div class="onecon" style="padding: 20px;">
+            <img src="/static/images/OrganicFertilizer.jpg" alt="Description" style="width:400px;height: 440px;" />
+          </div>
+          <div class="twocon" style="width: 50%;">
+        <form id="fertilizerForm" action="{{ url_for('predict_fertilizer') }}" method="post" style="margin-left: -120px;height: 440px;">
+
+          <label for="nitrogen" style="margin-left:100px ;">Nitrogen (N)</label>
+          <input type="text" id="nitrogen" name="nitrogen" required style="width: 300px;"/><br>
+
+          <label for="phosphorus" style="margin-left:100px ;">Phosphorus (P)</label>
+          <input type="text" id="phosphorus" name="phosphorus" required style="width: 300px;"/><br>
+
+          <label for="potassium" style="margin-left:100px ;">Potassium (K)</label>
+          <input type="text" id="potassium" name="potassium" required style="width: 300px;"/><br>
+
+          <label for="cropName" style="margin-left:100px ;">Select Crop</label><br>
+          <select id="cropName" name="cropName" required style="margin-top: 10px;width: 300px;height: 40px;border-radius: 5px;">
+            <option>apple</option>
+            <option>banana</option>
+            <option>blackgram</option>
+            <option>chickpea</option>
+            <option>coconut</option>
+            <option>coffee</option>
+            <option>cotton</option>
+            <option>grapes</option>
+            <option>groundnut</option>
+            <option>jute</option>
+            <option>kidneybeans</option>
+            <option>lentil</option>
+            <option>maize</option>
+            <option>mango</option>
+            <option>mothbeans</option>
+            <option>mungbean</option>
+            <option>muskmelon</option>
+            <option>mustard</option>
+            <option>orange</option>
+            <option>paddy</option>
+            <option>papaya</option>
+            <option>pearlmillet</option>
+            <option>pigeonpea</option>
+            <option>pomegranate</option>
+            <option>rapeseed</option>
+            <option>rice</option>
+            <option>sorghum</option>
+            <option>sugarcane</option>
+            <option>watermelon</option>
+            <option>wheat</option>
+          </select><br /><br />
+          <br><br>
+
+          <button type="submit" style="width: 180px;">Get Recommendation</button>
+
+        </form>
+      </div>
+      </div>
+        <footer>
+          &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
+          <br />
+          <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a> |
+          <a href="#">Terms of Service</a>
+        </footer>
+
+    <script src="/static/js/script.js" defer></script>
+</body>
+
+</html>

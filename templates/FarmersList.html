@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farmers List</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/inter@3.15.4/css/inter.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Judson&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Julee&display=swap"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script>
+      function printPage() {
+        var originalContent = document.body.innerHTML;
+        document.body.innerHTML = `
+         <div class="farmer_container">
+           <h1>LIST OF FARMERS</h1>
+            <table>
+             ${document.getElementById("farmerlists").innerHTML}
+            </table>
+         </div>
+         `;
+
+        // var rows = document.querySelectorAll(".farmer_container table tr");
+        // rows.forEach((row) => {
+        //   row.removeChild(row.lastElementChild);
+        // });
+
+        window.print();
+
+        // Restore the original content
+        document.body.innerHTML = originalContent;
+      }
+      
+      // JavaScript function to handle search
+      function search(query) {
+        window.location.href = "/search?data=" + encodeURIComponent(query);
+      }
+
+      // JavaScript function to handle input change event on the search field
+      document.addEventListener("DOMContentLoaded", function () {
+        // Add an event listener to the search input field
+        document
+          .querySelector('input[name="data"]')
+          .addEventListener("input", function (event) {
+            // Check if the search input field is empty
+            if (event.target.value.trim() === "") {
+              // If empty, trigger the search function with an empty search query
+              search("");
+            }
+          });
+      });
+    </script>
+  </head>
+
+  <body class="fade-in">
+    <div class="container">
+      <img class="svg" src="/static/images/Rectangle.png" alt="SVG image" />
+      <header>
+        <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+        <form class="example" action="/search" method="get">
+          <input
+            type="text"
+            name="data"
+            placeholder="Enter search query"
+            value="{{data}}"
+          />
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+
+        <div class="navbar">
+          <a href="/AO"><i class="fa fa-home"></i> Home</a>
+                <a href="/Add_NewFarmer"><i class="fa-solid fa-user-plus"></i> Farmer</a>
+                <a href="/Farmer_List" class="active"><i class="fa-solid fa-list"></i> List</a>
+                <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+      </header>
+
+      <div class="farmer_container">
+        <div style="display: flex;">
+        <div style="width: 50%;margin-left: 600px;"><a style="color: black;text-decoration: none;font-size: 20px;font-weight: bold;">LIST OF FARMERS</a></div>
+        <div style="width: 50%;margin-left: 450px;"><a style="color: black;text-decoration: none;font-size: 20px; " onclick="printPage()"><i class="fa-solid fa-download"></i></a></div>
+        </div>
+        <br>
+        <table id="farmerlists">
+          <thead>
+            <tr>
+              <th>RegistrationNo</th>
+              <th>Name</th>
+              <th>PhoneNo</th>
+              <th>Taluka</th>
+              <th>Revenue Village</th>
+              <th>Village Panchayat</th>
+              <th>Ward</th>
+              <th>Location Description</th>
+              <th>Category</th>
+              <th>Analysis Required</th>
+              <th>AadhaarNo</th>
+              <th>Area</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for farmer in farmer_details %}
+            <tr>
+              <td><a href="{{ url_for('farmer_entry', farmer_id=farmer[0]) }}" style="color: black;text-decoration: none;">{{ farmer[0] }}</a></td>
+              <td><a href="{{ url_for('farmer_entry', farmer_id=farmer[0]) }}" style="color: black;text-decoration: none;">{{ farmer[1] }}</a></td>
+              <td><a href="{{ url_for('farmer_entry', farmer_id=farmer[0]) }}" style="color: black;text-decoration: none;">{{ farmer[2] }}</a></td>
+              <td><a href="{{ url_for('farmer_entry', farmer_id=farmer[0]) }}" style="color: black;text-decoration: none;">{{ farmer[3] }}</a></td>
+              <td><a href="{{ url_for('farmer_entry', farmer_id=farmer[0]) }}" style="color: black;text-decoration: none;">{{ farmer[4] }}</a></td>
+              <td><a href="{{ url_for('farmer_entry', farmer_id=farmer[0]) }}" style="color: black;text-decoration: none;">{{ farmer[5] }}</a></td>
+              <td><a href="{{ url_for('farmer_entry', farmer_id=farmer[0]) }}" style="color: black;text-decoration: none;">{{ farmer[6] }}</a></td>
+              <td><a href="{{ url_for('farmer_entry', farmer_id=farmer[0]) }}" style="color: black;text-decoration: none;">{{ farmer[7] }}</a></td>
+              <td><a href="{{ url_for('farmer_entry', farmer_id=farmer[0]) }}" style="color: black;text-decoration: none;">{{ farmer[8] }}</a></td>
+              <td><a href="{{ url_for('farmer_entry', farmer_id=farmer[0]) }}" style="color: black;text-decoration: none;">{{ farmer[9] }}</a></td>
+              <td><a href="{{ url_for('farmer_entry', farmer_id=farmer[0]) }}" style="color: black;text-decoration: none;">{{ farmer[10] }}</a></td>
+              <td><a href="{{ url_for('farmer_entry', farmer_id=farmer[0]) }}" style="color: black;text-decoration: none;">{{ farmer[11] }}</a></td>
+              
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <footer>
+          &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
+          <br />
+          <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a> |
+          <a href="#">Terms of Service</a>
+        </footer>
+      </div>
+    </div>
+    <script src="/static/js/script.js" defer></script>
+  </body>
+</html>

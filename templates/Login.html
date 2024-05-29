@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgroZ Login</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+
+  <body style="position: fixed;">
+    <div class="container">
+      <img class="svg" src="/static/images/Rectangle.png" alt="SVG image"  />
+      <header>
+        <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+        {% if category == 'success' %}
+        <div class="success-message-box">
+          <b><p style="font-size: larger;margin-bottom: 20px;">{{message}}</p></b>
+          <span class="close-button" onclick="this.parentElement.style.display='none';">&times;</span>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endwith %}
+        <div class="navbar">
+          <a href="/" ><i class="fa fa-home"></i> Home</a>
+          <a href="/Login" class="active"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+          <a href="/SignUp"><i class="fa-solid fa-user-plus"></i> Signup</a>
+        </div>
+      </header>
+      <!-- <img
+        src="/static/images/signup_login.png"
+        alt="Description of the image"
+      /> -->
+      <div class="signup-login_container" style="width: 500px;top: 400px;">
+        <form action="http://127.0.0.1:5000/handles_login" method="post">
+          <h1 class="signup-login">LOGIN</h1>
+          <br>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            required
+          /><br />
+          <div class="password-container">
+            <input type="password" name="password" id="password" placeholder="Password" required />
+            <i id="eye" class="fas fa-eye" style="color: black;"></i> </div>
+          <br />
+          {% if error_message %}
+          <p class="error-message">{{ error_message }}</p>
+          <br />
+          {% endif %}
+          <a href="/forgot_password" class="forgot-password">Forgot Password?</a
+          ><br />
+          <input type="submit" value="Login" />
+        </form>
+        <a href="/SignUp" class="new-user">New User? Sign Up</a>
+      </div>
+    </div>
+    <script>
+      const passwordInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eye');
+
+      eyeIcon.addEventListener('click', () => {
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          eyeIcon.classList.remove('fa-eye'); // Change to closed eye icon
+          eyeIcon.classList.add('fa-eye-slash');
+        } else {
+          passwordInput.type = 'password';
+          eyeIcon.classList.remove('fa-eye-slash'); // Change to open eye icon
+          eyeIcon.classList.add('fa-eye');
+        }
+      });
+    </script>
+  </body>
+</html>

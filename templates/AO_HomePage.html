@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgroZ - Agriculture Recommendations</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/inter@3.15.4/css/inter.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Judson&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Julee&display=swap"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  </head>
+
+  <body>
+    <div class="container">
+      <img class="svg" src="/static/images/Rectangle.png" alt="SVG image" />
+      <header>
+        <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+        {% if category == 'success' %}
+        <div class="success-message-box">
+          <b><p style="font-size: larger;margin-top: 20px;">{{message}}</p></b>
+          <span class="close-button" onclick="this.parentElement.style.display='none';">&times;</span>
+         </div>
+        {% endif %}
+        {% endfor %}
+        {% endwith %}
+
+        <div class="navbar">
+          <a href="/AO" class="active"><i class="fa fa-home"></i> Home</a>
+          <a href="/Add_NewFarmer"><i class="fa-solid fa-user-plus"></i> Farmer</a>
+          <a href="/Farmer_List"><i class="fa-solid fa-list"></i> List</a>
+          <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+      </header>
+
+      <div class="main">
+        <h1 class="animated-right">Agriculture Recommendations</h1>
+      <p class="animated-right">
+        Indian farmers lack crucial knowledge on optimal crop selection,
+        fertilizer use, and pest <br />
+        management, resulting in lower yields, financial struggles, and soil
+        degradation.
+      </p>
+
+      <img class="animated-right" src="/static/images/pic1.png" alt="Description of the image" />
+
+      <p class="animated-right">
+        "We at AgroZ introduce precision agriculture through a recommendation
+        system, utilizing modern <br />techniques for crop suitability. Our
+        platform suggests crops, organic fertilizers based on crop and <br />
+        nutrient values, identifies pests, and recommends ISO-standard
+        pesticides."
+      </p>
+
+      <div class="container animated-left" style="display: flex;">
+      <div class="article" style="height: auto;margin-left: 100px;width: 40%;">
+        <h2>Latest Agriculture News</h2>
+        <div class="news-slides">
+          </div>
+          <a href="/Articles" >Read more...</a>
+      </div>
+      <div class="slideshow">
+        <div class="card-slide fade">
+        <div class="card">
+            <h2>Water Management Solutions</h2>
+            <p>Water management solutions involve techniques and practices aimed at conserving and efficiently using water resources in agriculture. This includes methods such as drip irrigation, rainwater harvesting, and soil moisture monitoring to optimize water use and minimize waste.</p>
+        </div>
+        </div>
+        <div class="card-slide fade">
+        <div class="card">
+            <h2>Agricultural Education Resources</h2>
+            <p>Agricultural education resources encompass a wide range of materials and programs designed to educate individuals about various aspects of agriculture. This can include online courses, educational videos, extension services, and educational publications focused on topics such as crop production, livestock management, and sustainable agriculture practices.</p>
+        </div>
+        </div>
+        <div class="card-slide fade">
+        <div class="card">
+            <h2>Government Schemes and Subsidies</h2>
+            <p>Government schemes and subsidies are initiatives implemented by governmental bodies to support farmers and promote agricultural development. These may include financial incentives, subsidies for inputs such as seeds and fertilizers, crop insurance programs, and price support mechanisms to stabilize agricultural markets.</p>
+        </div>
+        </div>
+        <div class="card-slide fade">
+        <div class="card">
+            <h2>Agricultural Insurance Services</h2>
+            <p>Agricultural insurance services provide financial protection to farmers against losses caused by natural disasters, crop failures, or other unforeseen events. These services may include crop insurance, livestock insurance, and weather-based insurance products tailored to the specific needs of agricultural producers.</p>
+        </div>
+        </div>
+        <div class="card-slide fade">
+        <div class="card">
+            <h2>Integrated Pest Management (IPM)</h2>
+            <p>Integrated Pest Management (IPM) is a holistic approach to pest control that emphasizes the use of multiple strategies to manage pests effectively while minimizing the use of chemical pesticides. This approach may include biological control, crop rotation, habitat manipulation, and the use of resistant crop varieties to maintain pest populations at acceptable levels.</p>
+        </div>
+        </div>
+        <div class="card-slide fade">
+        <div class="card">
+            <h2>Farm Financial Management</h2>
+            <p>Farm financial management involves the planning, monitoring, and control of financial resources on the farm to ensure profitability and sustainability. This includes budgeting, cash flow management, financial analysis, and risk management strategies to optimize farm income and mitigate financial risks.</p>
+        </div>
+        </div>
+        <div class="card-slide fade">
+        <div class="card">
+            <h2>Agricultural Education and Training</h2>
+            <p>Agricultural education and training programs provide individuals with the knowledge, skills, and practical experience needed to succeed in various agricultural careers. These programs may include vocational training, university degrees, apprenticeships, and on-the-job training opportunities in areas such as agronomy, animal science, agricultural engineering, and agribusiness management.</p>
+        </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br>
+<div class="modules animated-left">
+  <figure>
+    <img style="width: 600px;" class="card"  src="/static/images/lcrop.jpg">
+    <figcaption><b>Crop Recommendations</b></figcaption>
+    </figure>
+  <div>
+  <h2>Crop Recommendation based on Soil and Climate Data</h2>
+  <p style="margin-left: 20px;">This crop recommendation tool empowers agricultural 
+    officers to provide enhanced support to farmers. By leveraging data-driven crop 
+    selection recommendations, farmers can choose the most suitable options for 
+    their land, leading to maximized yields and profitability. The tool also 
+    streamlines efficiency for officers, allowing them to quickly identify ideal 
+    crop choices for various plots, saving valuable time and resources.Furthermore, 
+    these recommendations are based on scientific data and analysis, ensuring 
+    officers make informed decisions for farmers. Ultimately, this approach 
+    promotes sustainable practices by encouraging the selection of crops that 
+    thrive in the local environment, fostering a more responsible and long-term 
+    approach to agriculture.</p>
+</div>
+</div>
+<br>
+<div class="modules animated-left">
+  <div>
+  <h2>Unlock Hidden Potential: The Right Fertilizer for Every Crop</h2>
+  <p style="margin-right: 20px;">This fertilizer module empowers agricultural officers to unlock a range of benefits 
+    for farmers. By entering details like soil nutrients, crop type, and yield goals, 
+    the module leverages advanced models to recommend the perfect fertilizer blend for 
+    each unique scenario. This data-driven approach leads to a win-win situation: farmers 
+    experience increased yields and improved crop health with reduced costs, while the 
+    environment benefits from minimized fertilizer runoff thanks to precise 
+    recommendations. Additionally, the user-friendly interface streamlines decision-making 
+    for officers, allowing them to efficiently support farmers and promote sustainable 
+    agricultural practices.</p>
+</div>
+<br>
+<figure>
+<img style="width: 600px;" class="card"  src="/static/images/lfert.jpg">
+<figcaption><b>Fertilizer Recommendations</b></figcaption>
+</figure>
+</div>
+<br>
+<div class="modules animated-left">
+  <figure>
+    <img style="width: 600px;" class="card"  src="/static/images/lpest.jpg">
+    <figcaption><b>Pesticide Recommendations</b></figcaption>
+    </figure>
+  <div>
+  <h2>AI-Powered Pest Diagnosis: Identify & Treat Crop Threats with Confidence</h2>
+  <p style="margin-left: 20px;">Fight crop threats faster and smarter! This AI-powered pesticide module empowers 
+    agricultural officers. Upload a photo of the affected plant, and the module diagnoses 
+    the exact pest or disease. It then recommends the most effective pesticides, 
+    all within seconds. This translates to healthier crops, maximized yields, and reduced 
+    costs for farmers. Plus, officers save valuable time with quick diagnoses, allowing 
+    them to focus on proactive support.  It's a win-win for sustainable agriculture and 
+    efficient crop management.</p>
+</div>
+</div>
+<br><br><br>
+      <img style="height: 200px;" class="bottom_pic" src="/static/images/background.png" />
+        <footer>
+          &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
+          <br />
+          <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a> |
+          <a href="#">Terms of Service</a>
+        </footer>
+      </div>
+    </div>
+    <script>
+      async function fetchNews() {
+     try {
+       const response = await fetch('/get_news');
+       const newsData = await response.json();
+       if (response.ok) {
+         displayNews(newsData.articles);
+         createSlideshow(); // Call createSlideshow only once after successful fetch
+       } else {
+         console.error('Failed to fetch news');
+       }
+     } catch (error) {
+       console.error('Error fetching news:', error);
+     }
+   }
+   
+   function displayNews(articles) {
+     const newsSlides = document.querySelector('.news-slides');
+     articles.forEach(article => {
+       const newsItem = document.createElement('div');
+       newsItem.classList.add('news-item');
+       newsItem.innerHTML = `
+         <a href="${article.url}" target="_blank">
+           <h3>${article.title}</h3>
+           <p>${article.description}</p>
+         </a>
+       `;
+       newsSlides.appendChild(newsItem);
+     });
+   }
+   
+   function createSlideshow() {
+     const newsSlides = document.querySelector('.news-slides');
+     const newsItems = newsSlides.querySelectorAll('.news-item');
+     let currentSlide = 0;
+     const slideInterval = 7000; // Change this value to adjust transition interval in milliseconds
+   
+     function showSlide() {
+       newsItems.forEach((item, index) => {
+         item.style.display = index === currentSlide ? 'block' : 'none';
+       });
+     }
+   
+     function nextSlide() {
+       currentSlide = (currentSlide + 1) % newsItems.length;
+       showSlide();
+     }
+   
+     function prevSlide() {
+       currentSlide = (currentSlide - 1 + newsItems.length) % newsItems.length;
+       showSlide();
+     }
+   
+     // Show the initial slide
+     showSlide();
+     // Set up automatic slide transitions
+     const intervalId = setInterval(nextSlide, slideInterval);
+   }
+   
+   fetchNews(); // Call fetchNews only once
+
+
+   let slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  let slides = document.getElementsByClassName("card-slide");
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+
+  slideIndex++;
+  if (slideIndex > slides.length) {
+    slideIndex = 1;
+  }
+
+  slides[slideIndex - 1].style.display = "block";
+  setTimeout(showSlides, 3000); // Change slide every 3 seconds
+}
+
+function plusSlides(n) {
+  slideIndex += n;
+  showSlides();
+}
+
+
+</script>
+<!-- <script>
+
+      let slideIndex = 0;
+      let slideInterval;
+  
+      showSlides();
+  
+      function showSlides() {
+        let slides = document.getElementsByClassName("slide");
+        for (let i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+        }
+  
+        slideIndex++;
+        if (slideIndex > slides.length) {
+          slideIndex = 1;
+        }
+  
+        slides[slideIndex - 1].style.display = "block";
+        slideInterval = setTimeout(showSlides, 3000); // Change slide every 3 seconds
+      }
+  
+      // Function to move slides forward or backward
+      function plusSlides(n) {
+        clearTimeout(slideInterval);
+        showSlides();
+      }
+  
+      // Keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowLeft") {
+          plusSlides(-1);
+        } else if (e.key === "ArrowRight") {
+          plusSlides(1);
+        }
+      });
+    </script> -->
+    <script src="script.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crop_Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body style="position: fixed;">
+    <div class="container">
+        <img class="svg" src="/static/images/Rectangle.png" alt="SVG image" />
+        <header>
+            <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+
+            <div class="navbar">
+            </div>
+        </header>
+
+
+        <h1 style="font-size: 20px;margin-left: 20px;">CROP RECOMMENDATION RESULT</h1>
+    <div class="conall">
+       <div class="onecon">
+        <h1 style="margin-top: 150px;">Recommended Crop:</h1>
+        <h2 style="margin-top: 20px;"> {{ predicted_crop }}</h2>
+       </div>
+       <div class="twocon">
+        {% if image_url %}
+          <img src="{{ image_url }}" alt="Disease Image" style="width:400px;height: 350px;margin-top: 5px;">
+        {% endif %}
+       </div>
+    </div>
+    
+    <a href="/Crop"><button style="height: 30px;background-color: #4caf50;border-radius: 6px;color: aliceblue;border-color: none;border: none;margin-top: 20px;;">Back to Recommendation</button></a>
+            <footer>
+                &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
+                <br />
+                <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a> |
+                <a href="#">Terms of Service</a>
+            </footer>
+
+    </div>
+    <script src="/static/js/script.js" defer></script>
+</body>
+
+</html>

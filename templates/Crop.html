@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crop Recommendation</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter@3.15.4/css/inter.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Judson&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Julee&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body style="position: fixed;">
+  <div class="container">
+    <img class="svg" src="/static/images/Rectangle.png" alt="SVG image" />
+    <header>
+      <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
+
+      <div class="navbar">
+        <a href="/recommendation"><i class="fa-solid fa-arrow-left"></i></a>
+      </div>
+    </header>
+
+    <h1 style="font-size: 30px;margin-bottom: 20px;margin-top: -50px;">CROP</h1>
+    <div class="conall" style="width: 1100px;margin-left: 200px;height: 500px;">
+      <div class="onecon" style="padding: 20px;">
+        <img src="/static/images/crop_pg.png" alt="Description" style="width:400px;height: 440px;" />
+      </div>
+      <div class="twocon" style="width: 80%;">
+        <form id="cropForm" action="{{ url_for('predict') }}" method="post" class="split-form">
+        <br>
+        <div style="display: flex;">
+          <div style="width: 50%;">
+        <label for="cityName" style="margin-right: 140px;">Enter City Name</label><br>
+        <input type="text" id="city" name="city" required />
+        <button type="button"  onclick="getWeather()">Get Weather</button></div>
+
+        <div style="width: 50%;">
+        <label for="nitrogen" style="margin-right: 180px;">Nitrogen (N)</label><br>
+        <input type="text" id="nitrogen" name="nitrogen" required />
+      </div>
+    </div>
+<br>
+    <div style="display: flex;">
+      <div style="width: 50%;">
+        <label for="phosphorus" style="margin-right: 150px;">Phosphorus (P)</label><br>
+        <input type="text" id="phosphorus" name="phosphorus" required /></div>
+
+        <div style="width: 50%;">
+        <label for="potassium" style="margin-right:170px ;">Potassium (K)</label><br>
+        <input type="text" id="potassium" name="potassium" required /></div>
+    </div>
+
+        <div id="weatherInfo" style="display: none">
+          <div style="display: flex;">
+          <div style="width: 50%;">
+          <label for="temperature" style="margin-right: 140px;">Temperature (°C)</label><br>
+          <input type="text" id="temperature" name="temperature" value="" readonly  /></div>
+
+          <div style="width: 50%;">
+          <label for="humidity" style="margin-right:170px ;">Humidity (%)</label><br>
+          <input type="text" id="humidity" name="humidity" value="" readonly /></div>
+        </div>
+        </div>
+
+        <div style="display: flex;">
+          <div style="width: 50%;">
+        <label for="ph" style="margin-right:200px;">pH Level</label><br>
+        <input type="text" id="ph" name="ph" required /></div>
+
+        <div style="width: 50%;">
+        <label for="rainfall" style="margin-right:170px ;">Rainfall (mm)</label><br>
+        <input type="text" id="rainfall" name="rainfall" required /><br></div>
+        </div>
+        <br><br>
+        <button type="submit" disabled style="width: 180px;">Get Recommendation</button><br>
+      </form>
+      </div>
+   </div>
+      <footer>
+        &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
+        <br />
+        <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a> |
+        <a href="#">Terms of Service</a>
+      </footer>
+  </div>
+
+  <script src="/static/js/script.js" defer></script>
+</body>
+
+</html>
