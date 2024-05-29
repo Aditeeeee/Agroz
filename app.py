@@ -459,8 +459,8 @@ def recom():
 
 #CROP RECOMMENDATION
 #import model
-model = pickle.load(open('model/NaiveBayes_model.pkl','rb'))
-df = pd.read_csv('FertilizerData.csv')
+model = pickle.load(open('model/Crop/NaiveBayes_model.pkl','rb'))
+df = pd.read_csv('data/Organic fertilizer data.csv')
 
 #weather fetching
 def weather_fetch(city_name):
@@ -485,11 +485,11 @@ def weather_fetch(city_name):
         return None, None
 
 # Load the model and encoders
-with open('model/label_encoder_crop.pkl', 'rb') as file:
+with open('model/Fertilizer/label_encoder_crop.pkl', 'rb') as file:
     label_encoder_crop = pickle.load(file)
-with open('model/label_encoder_fertilizer.pkl', 'rb') as file:
+with open('model/Fertilizer/label_encoder_fertilizer.pkl', 'rb') as file:
     label_encoder_fertilizer = pickle.load(file)
-with open('model/best_model.pkl', 'rb') as file:
+with open('model/Fertilizer/best_model.pkl', 'rb') as file:
     model = pickle.load(file)   
 
 @app.route('/Crop')
@@ -760,7 +760,7 @@ def get_weather():
 
 #PESTICIDE RECOMMENDATION    
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-MODEL_DIR = os.path.join(BASE_DIR, 'model')
+MODEL_DIR = os.path.join(BASE_DIR, 'model/Pesticide')
 
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'JPG'}
