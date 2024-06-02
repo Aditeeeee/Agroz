@@ -21,14 +21,16 @@ import xgboost
 from flask_cors import CORS
 import logging
 
+
+
 #Creating app
 app = Flask(__name__)
 app.secret_key = 'WeAreUnique#1289'
 CORS(app)
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
+
 
 
 # DATABASE
@@ -43,10 +45,12 @@ DB_CONFIG = {
 db_pool = pooling.MySQLConnectionPool(pool_name="my_pool", pool_size=5, **DB_CONFIG)
 
 
+
 #LANDING PAGE
 @app.route('/')
 def landing_page():
     return render_template('Landing.html')
+
 
 
 #SIGNUP
@@ -92,6 +96,7 @@ def user_signup():
         return str(e)
 
 
+
 #LOGIN
 @app.route('/Login')
 def login(): 
@@ -123,6 +128,9 @@ def user_login():
     except Exception as e:
         return str(e)
     
+
+
+#FORGET PASSWORD    
 @app.route('/forgot_password')
 def f_password():
     return render_template('Forgot_Password.html')    
@@ -144,6 +152,9 @@ def forgot_password():
             error_msg = "Email doesnot exist!!"
             return render_template('Forgot_Password.html',error_msg=error_msg)  
 
+
+
+#RESET PASSWORD
 @app.route('/reset-password', methods=['GET', 'POST'])
 def reset_password():
     if request.method == 'POST':
@@ -178,7 +189,9 @@ def reset_password():
     return render_template('forgot_password.html')
     
 
-# NEW AND ARTICLES RELATED TO AGRICLUTURE
+
+
+# NEW AND ARTICLES RELATED TO AGRICLUTURE [OUTSIDE]
 NEWS_API_KEY = '6aa6772d26eb493f88de95af04af1818'  # Replace with your actual News API key
 
 @app.route('/News_Articles')
@@ -201,18 +214,23 @@ def get_news():
     else:
         return jsonify({'error': 'Failed to fetch news'}), 500
     
-    
+
+
 #AGRICULTURAL OFFICER HOME PAGE
 @app.route('/AO')
 def AOhome_page():
     return render_template('AO_HomePage.html')
 
-#inside news article
+
+
+# NEW AND ARTICLES RELATED TO AGRICLUTURE [INSIDE]
 @app.route('/Articles')
 def news():
     return render_template('Articles_in.html')
 
-#Add-Farmer
+
+
+#ADD FARMER
 @app.route('/Add_NewFarmer')
 def add_newFarmer():
     return render_template('Add_NewFarmer.html')
@@ -286,7 +304,9 @@ def handle_farmer_details():
    except Exception as e:
         return f"An error occurred: {str(e)}"
    
-#Display farmers details
+
+
+#FARMERS LIST
 @app.route('/Farmer_List')
 def farmer_list():
     try:
@@ -305,6 +325,7 @@ def farmer_list():
     except Exception as e:
         return str(e)       
 
+#Search
 @app.route('/search',methods = ['GET'])
 def search():
     data = request.args.get('data')
@@ -322,19 +343,22 @@ def search():
     except Exception as e:
         return f"An error occurred: {str(e)}"
     
-#User-Logout
+
+
+#USER{AO} LOGOUT
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)  
     return render_template('Landing.html')
 
-#Home
+
+
+#FARMER'S PAGE
 @app.route('/Home')
 def home_page():
     return render_template('Home.html')
   
-
-#Farmer Login Page
+#FARMER'S PROFILE
 @app.route('/farmer/<int:farmer_id>')
 def farmer_entry(farmer_id):
         if 'user_id' in session:
@@ -380,7 +404,8 @@ def farmer_entry(farmer_id):
         else:
             return redirect(url_for('login'))
 
-# Route to render the Edit Profile page
+
+#EDIT PROFILE
 @app.route('/edit_profile/<int:farmer_id>')
 def edit_profile(farmer_id):
     try:
@@ -394,7 +419,7 @@ def edit_profile(farmer_id):
     except Exception as e:
         return f"An error occurred: {str(e)}"
 
-# Route to handle updating the profile data
+#UPDATE PROFILE IN DATABASE
 @app.route('/update_profile/<int:farmer_id>', methods=['POST'])
 def update_profile(farmer_id):
     try:
@@ -429,6 +454,7 @@ def update_profile(farmer_id):
     except Exception as e:
         return f"An error occurred: {str(e)}"
 
+#DELETE FARMER
 @app.route('/delete/<int:farmer_id>')
 def delete(farmer_id):
     try:
@@ -447,15 +473,21 @@ def delete(farmer_id):
     except Exception as e:
         return f"An error occurred: {str(e)}"    
 
-#Farmer logout
+
+
+#FARMER'S LOGOUT
 @app.route('/logoutFarmer')
 def logout2():
     session.pop('farmer_id', None)
     return render_template('AO_HomePage.html')
 
+
+#RECOMMENDATIONS
 @app.route('/recommendation')
 def recom():
     return render_template('Recommendations.html')
+
+
 
 #CROP RECOMMENDATION
 #import model
@@ -483,15 +515,7 @@ def weather_fetch(city_name):
     except Exception as e:
         print(f"Error fetching weather data: {str(e)}")
         return None, None
-
-# Load the model and encoders
-with open('model/Fertilizer/label_encoder_crop.pkl', 'rb') as file:
-    label_encoder_crop = pickle.load(file)
-with open('model/Fertilizer/label_encoder_fertilizer.pkl', 'rb') as file:
-    label_encoder_fertilizer = pickle.load(file)
-with open('model/Fertilizer/best_model.pkl', 'rb') as file:
-    model = pickle.load(file)   
-
+   
 @app.route('/Crop')
 def crop_recommendation():
     return render_template('Crop.html')
@@ -512,14 +536,17 @@ def predict():
         prediction = model.predict(data)
         crop_prediction = prediction[0]
 
+        logging.info("Received input data:")
+        logging.info(f"N: {N}, P: {P}, K: {K}, temperature: {temperature}, humidity: {humidity}, pH: {ph}, rainfall: {rainfall}")
 
         CROP_FOLDER = './static/crops'
 
-        image_name = crop_prediction + '.jpg'
+        image_name = str(crop_prediction) + '.jpg'
         image_path = os.path.join(CROP_FOLDER, image_name)
         if os.path.exists(image_path):
         # Pass the image URL to the template
            image_url = url_for('static', filename='crops/' + image_name)
+           print("Image URL:", image_url)
 
         # Insert recommendation data into the database
         try:
@@ -531,13 +558,16 @@ def predict():
         except Exception as e:
             return f"An error occurred while saving recommendation: {str(e)}"
 
+        logging.info("Predicted Crop:", crop_prediction) # Debugging statement
+
         # Render template with recommendation result
         return render_template('Crop_Result.html', predicted_crop=crop_prediction,image_url=image_url)
     else:
         print(f"Failed to fetch weather data for {city}") 
 
 
-#FERTILIZER RECOMMENDATION
+
+#ORGANIC FERTILIZER RECOMMENDATION
 @app.route('/Fertilizer_Option_Page')
 def fertilizerSection():
     return render_template('Fertilizer_Option_Page.html')
@@ -622,62 +652,43 @@ def predict_fertilizer():
 
     return render_template('Fertilizer_Result.html', recommendations=recommendations)
 
+
+
+#CHEMICAL FERTILIZER RECOMMENDATION
 @app.route('/ChemicalFertilizer')
 def chemical_fertilizer_recommendation():
     return render_template('Chemical_Fertilizer.html')
 
+#import model
+with open('model/Fertilizer/xgboost_model.pkl', 'rb') as file:
+    xgboost_model = pickle.load(file)
 
-def weather_fetch2(city):
-    api_key = '49287276118b089ee94e7a10946443cf'
-    base_url = 'http://api.openweathermap.org/data/2.5/weather'
-    params = {'q': city, 'appid': api_key}
+#import model
+with open('model/Fertilizer/label_encoder.pkl', 'rb') as file:
+    label_encoder = pickle.load(file)
 
+@app.route('/predictChemicalFertilizer', methods=['POST'])
+def predictChemicalFertilizer():
     try:
-        response = requests.get(base_url, params=params)
-        data = response.json()
+        # Get user input from the form
+        N = int(request.form['N'])
+        P = int(request.form['P'])
+        K = int(request.form['K'])
+        Crop = request.form['Crop']
+        
+        # Create a DataFrame with the user input
+        input_data = pd.DataFrame([[N, P, K, Crop]], columns=['N', 'P', 'K', 'Crop'])
 
-        if response.status_code == 200:
-            temperature = data['main']['temp'] - 273.15
-            # humidity = data['main']['humidity']
-            return temperature
-        else:
-            logging.error(f"Error fetching weather data: {data['message']}")
-            return None, None
-    except Exception as e:
-        logging.error(f"Exception while fetching weather data: {str(e)}")
-        return None, None
+        # Make prediction using the loaded model
+        prediction = xgboost_model.predict(input_data)  
 
-
-@app.route('/cpredict', methods=['POST'])
-def cpredict():
-    try:
-        # Get form data
-        n = float(request.form['n'])
-        p = float(request.form['p'])
-        k = float(request.form['k'])
-        ph = float(request.form['ph'])
-        rainfall = float(request.form['rainfall'])
-        temperature = float(request.form['temperature'])
-        crop = request.form['Crop']
-
-        logging.info(f"Received input: N={n}, P={p}, K={k}, pH={ph}, Rainfall={rainfall}, Temperature={temperature}, Crop={crop}")
-
-        # Encode the crop
-        crop_encoded = label_encoder_crop.transform([crop])[0]
-        logging.info(f"Encoded crop: {crop_encoded}")
-
-        # Create a numpy array for the features
-        features = np.array([[n, p, k, ph, rainfall, temperature, crop_encoded]])
-        logging.info(f"Features: {features}")
-
-        # Make a prediction
-        prediction_encoded = model.predict(features)[0]
-        prediction = label_encoder_fertilizer.inverse_transform([prediction_encoded])[0]
-        logging.info(f"Prediction: {prediction}")
+        # Decode the numerical prediction to get the fertilizer name
+        predicted_fertilizer = label_encoder.inverse_transform(prediction)[0]
+        fertilizer_predicted = label_encoder.inverse_transform(prediction)
 
         FERTILIZER_FOLDER = './static/fertilizers'
 
-        image_name = str(prediction) + '.jpg'
+        image_name = str(predicted_fertilizer) + '.jpg'
         image_path = os.path.join(FERTILIZER_FOLDER, image_name)
         if os.path.exists(image_path):
         # Pass the image URL to the template
@@ -686,77 +697,19 @@ def cpredict():
         try:
          with db_pool.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO Chemfertilizer (farmer_id, crop, nitrogen, phosphorus, potassium,ph,rainfall,temperature,recommendation,recommendation_date) VALUES (%s, %s, %s, %s, %s, %s, %s,%s,%s,%s)",
-                        (session['farmer_id'], crop, n, p, k,ph,rainfall,temperature,str(prediction),date.today()))
+            # Insert input values, crop name, recommendations, and timestamp into the database table
+            cursor.execute("INSERT INTO Chemfertilizer (farmer_id, crop, nitrogen, phosphorus, potassium, recommendation,recommendation_date) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                        (session['farmer_id'], Crop, N, P, K,str(predicted_fertilizer),date.today()))
             conn.commit()
         except Exception as e:
             return f"An error occurred while inserting data into the database: {str(e)}"
 
-        return render_template('Chemical_Fertilizer_Result.html', prediction_text= prediction,image_url=image_url, 
-                               form_data=request.form)
+        # Render the result page with the prediction
+        return render_template('Chemical_Fertilizer_Result.html', prediction_text=fertilizer_predicted[0],image_url=image_url)
     except Exception as e:
-        logging.error(f"Error: {str(e)}")
-        return render_template('Chemical_Fertilizer_Result.html', prediction_text=f'Error: {str(e)}', 
-                               form_data=request.form)
-
-@app.route('/get_weather', methods=['POST'])
-def get_weather():
-    try:
-        city = request.json['city']
-        logging.info(f"Fetching weather for city: {city}")
-        temperature = weather_fetch2(city)
-        if temperature is not None:
-            logging.info(f"Fetched weather data: temperature={temperature}")
-            return jsonify({'temperature': temperature})
-        else:
-            logging.error("Failed to fetch weather data")
-            return jsonify({'error': 'Could not fetch weather data'}), 400
-    except Exception as e:
-        logging.error(f"Exception in /get_weather: {str(e)}")
-        return jsonify({'error': str(e)}), 500
-
-# @app.route('/predictChemicalFertilizer', methods=['POST'])
-# def predictChemicalFertilizer():
-#     try:
-#         # Get user input from the form
-#         N = int(request.form['N'])
-#         P = int(request.form['P'])
-#         K = int(request.form['K'])
-#         Crop = request.form['Crop']
-        
-#         # Create a DataFrame with the user input
-#         input_data = pd.DataFrame([[N, P, K, Crop]], columns=['N', 'P', 'K', 'Crop'])
-
-#         # Make prediction using the loaded model
-#         prediction = xgboost_model.predict(input_data)  
-
-#         # Decode the numerical prediction to get the fertilizer name
-#         predicted_fertilizer = label_encoder.inverse_transform(prediction)[0]
-#         fertilizer_predicted = label_encoder.inverse_transform(prediction)
-
-#         FERTILIZER_FOLDER = './static/fertilizers'
-
-#         image_name = str(predicted_fertilizer) + '.jpg'
-#         image_path = os.path.join(FERTILIZER_FOLDER, image_name)
-#         if os.path.exists(image_path):
-#         # Pass the image URL to the template
-#            image_url = url_for('static', filename='fertilizers/' + image_name)
-
-#         try:
-#          with db_pool.get_connection() as conn:
-#             cursor = conn.cursor()
-#             # Insert input values, crop name, recommendations, and timestamp into the database table
-#             cursor.execute("INSERT INTO Chemfertilizer (farmer_id, crop, nitrogen, phosphorus, potassium, recommendation,recommendation_date) VALUES (%s, %s, %s, %s, %s, %s, %s)",
-#                         (session['farmer_id'], Crop, N, P, K,str(predicted_fertilizer),date.today()))
-#             conn.commit()
-#         except Exception as e:
-#             return f"An error occurred while inserting data into the database: {str(e)}"
-
-#         # Render the result page with the prediction
-#         return render_template('Chemical_Fertilizer_Result.html', prediction_text=fertilizer_predicted[0],image_url=image_url)
-#     except Exception as e:
-#         return f"An error occurred: {str(e)}"        
+        return f"An error occurred: {str(e)}"        
     
+
 
 #PESTICIDE RECOMMENDATION    
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))

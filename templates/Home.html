@@ -58,9 +58,9 @@
             <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
 
             <div class="navbar">
-                <a href="/farmer/{{ session['farmer_id'] }}" class="active"><i class="fa-solid fa-user"></i> Profile</a>
-                <a href="/recommendation"><i class="fa-solid fa-thumbs-up"></i> Recommendation</a>
-                <a href="/logoutFarmer"><i class="fa-solid fa-arrow-left"></i> Exit</a>
+                <a href="/farmer/{{ session['farmer_id'] }}" class="active">Profile</a>
+                <a href="/recommendation">Recommendation</a>
+                <a href="/logoutFarmer">Exit</a>
             </div>
         </header>
         <section>
@@ -174,9 +174,6 @@
                         <th>Nitrogen (N)</th>
                         <th>Phosphorus (P)</th>
                         <th>Potassium (K)</th>
-                        <th>pH</th>
-                        <th>Rainfall</th>
-                        <th>Temperature</th>
                         <th>Crop</th>
                         <th>Recommendation</th>
                     </tr>
@@ -184,15 +181,12 @@
                 <tbody>
                     <tr>
                       {% for record in Chemfertilizer_history %}
-                        <td>{{ record[10] }}</td>
+                        <td>{{ record[7] }}</td>
                         <td>{{ record[3] }}</td>
                         <td>{{ record[4] }}</td>
                         <td>{{ record[5] }}</td>
-                        <td>{{ record[6] }}</td>
-                        <td>{{ record[7] }}</td>
-                        <td>{{ record[8] }}</td>
                         <td>{{ record[2] }}</td>
-                        <td>{{ record[9] }}</td>
+                        <td>{{ record[6] }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

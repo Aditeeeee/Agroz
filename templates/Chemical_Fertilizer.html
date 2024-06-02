@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Julee&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 </head>
 
 <body>
@@ -22,24 +21,29 @@
             <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
 
             <div class="navbar">
-                <a href="/Fertilizer_Option_Page"><i class="fa-solid fa-arrow-left"></i></a>
-            </div>
+                <a href="/recommendation"><i class="fa-solid fa-arrow-left"></i></a>
+              </div>
         </header>
-            <div class="fertilizer_container2">
 
-                <h1 style="font-size: 30px;">CHEMICAL FERTILIZER</h1>
-                <form action="/predictChemicalFertilizer" method="post">
-                    <label for="N" style="margin-left:100px;">Nitrogen (N)</label>
-                    <input type="text" name="N" required />
+        <h1 style="font-size: 30px;margin-bottom: 20px;margin-top: -50px;">CROP</h1>
+        <div class="conall" style="width: 1100px;margin-left: 200px;height: 500px;">
+          <div class="onecon" style="padding: 20px;">
+            <img src="/static/images/ChemicalFertilizer.jpg" alt="Description" style="width:400px;height: 440px;" />
+          </div>
+          <div class="twocon" style="width: 50%;">
+                <form action="/predictChemicalFertilizer" method="post" style="margin-left: -120px;">
+                    <br><br>
+                    <label for="N" style="margin-left: 100px;">Nitrogen (N)</label><br>
+                    <input type="text" name="N" required style="width: 60%;"/><br><br>
 
-                    <label for="P" style="margin-left:100px;">Phosphorus (P)</label>
-                    <input type="text" name="P" required />
+                    <label for="P" style="margin-left: 100px;">Phosphorus (P)</label><br>
+                    <input type="text" name="P" required style="width: 60%;"/><br><br>
 
-                    <label for="K" style="margin-left:100px;">Potassium (K)</label>
-                    <input type="text" name="K" required />
+                    <label for="K" style="margin-left: 100px;" >Potassium (K)</label><br>
+                    <input type="text" name="K" required style="width: 60%;"/><br><br>
 
-                    <label for="Crop" style="margin-left:100px;">Select Crop</label>
-                    <select id="Crop" name="Crop" required>
+                    <label for="Crop" style="margin-left: 100px;">Select Crop</label><br><br>
+                    <select id="Crop" name="Crop" required style="width: 60%;height: 35px;border-color: rgb(228, 225, 225);">
                         <option>Sugarcane</option>
                         <option>Jowar</option>
                         <option>Cotton</option>
@@ -56,12 +60,14 @@
                         <option>Turmeric</option>
                         <option>Grapes</option>
                     </select>
-                    <br /><br />
+                    <br /><br /><br>
 
-                    <button type="submit" value="Predict">
-                        Get Fertilizer Recommendation
+                    <button type="submit" value="Predict" style="width: 180px;">
+                        Get Recommendation
                     </button>
                 </form>
+                </div>
+                </div>
 
                 <footer>
                     &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
@@ -70,202 +76,9 @@
                     <a href="#">Terms of Service</a>
                 </footer>
             </div>
+        </div>
         <script src="/static/js/script.js" defer></script>
     </div>
 </body>
 
-</html> -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chemical Fertilizer Recommendation</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/inter@3.15.4/css/inter.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Judson&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Julee&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        /* body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        .container {
-            display: flex;
-            justify-content: space-between;
-            max-width: 800px;
-            margin: auto;
-        }
-        .form-container, .output-container {
-            width: 48%;
-        }
-        .form-container h1, .output-container h1 {
-            text-align: center;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        .btn-primary {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-        .alert {
-            padding: 15px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-        }
-        .alert-info {
-            color: #31708f;
-            background-color: #d9edf7;
-            border-color: #bce8f1;
-        } */
-    </style>
-    <script>
-        async function getWeather2() {
-            const city = document.getElementById("city").value.trim();
-            if (!city) {
-                alert("Please enter a city name.");
-                return;
-            }
-
-            try {
-                const response = await fetch('/get_weather', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ city })
-                });
-                const data = await response.json();
-
-                if (response.ok) {
-                    document.getElementById("temperature").value = data.temperature;
-                    // document.getElementById("rainfall").value = data.rainfall;
-                } else {
-                    alert(`Failed to fetch weather data: ${data.error}`);
-                }
-            } catch (error) {
-                console.error("Error fetching weather data:", error);
-                alert("An error occurred while fetching weather data.");
-            }
-        }
-    </script>
-</head>
-<body>
-    <div class="container">
-        <img class="svg" src="/static/images/Rectangle.png" alt="SVG image" />
-        <header>
-            <img class="logo" src="/static/images/logo.png" alt="AgroZ Logo" />
-
-            <div class="navbar">
-                <a href="/Fertilizer_Option_Page"><i class="fa-solid fa-arrow-left"></i></a>
-            </div>
-        </header>
-
-            <h1 style="font-size: 30px;margin-bottom: 20px;margin-top: -50px;">CHEMICAL FERTILIZER</h1>
-            <div class="conall" style="width: 1100px;margin-left: 200px;height: 500px;">
-            <div class="onecon" style="padding: 20px;">
-            <img src="/static/images/ChemicalFertilizer.jpg" alt="Description" style="width:400px;height: 440px;" />
-            </div>
-            <div class="twocon" style="width: 80%;">
-            <form action="/cpredict" method="post" class="split-form" style="height: 440px;">
-                <div style="display: flex;">
-                    <div style="width: 50%;">
-                    <label for="city" style="margin-right: 195px;">Enter City</label>
-                    <input type="text" id="city" name="city" required />
-                    <button type="button" onclick="getWeather2()">Get Weather</button>
-                    </div>
-
-                    <div style="width: 50%;">
-                    <label for="n" style="margin-right: 200px;">Nitrogen</label>
-                    <input type="text" id="n" name="n" required>
-                    </div>
-                    </div>
-                    <br><br>
-
-                    <div style="display: flex;">
-                        <div style="width: 50%;">
-                    <label for="p" style="margin-right: 170px;">Phosphorous</label>
-                    <input type="text" id="p" name="p"  required>
-                    </div>
-
-                    <div style="width: 50%;">
-                    <label for="k" style="margin-right:190px ;">Potassium</label>
-                    <input type="text" id="k" name="k"  required>
-                    </div>
-                    </div>
-
-                    <div style="display: flex;">
-                        <div style="width: 50%;">
-                    <label for="ph" style="margin-right:250px;">pH</label>
-                    <input type="text" id="ph" name="ph"  required>
-                    </div>
-
-                    <div style="width: 50%;">
-                    <label for="rainfall" style="margin-right:210px ;">Rainfall</label>
-                    <input type="text" id="rainfall" name="rainfall" required>
-                    </div>
-                    </div>
-
-                    <div style="display: flex;">
-                        <div style="width: 50%;">
-                    <label for="temperature" style="margin-right: 175px;">Temperature</label>
-                    <input type="text" id="temperature" name="temperature" required>
-                    </div>
-
-                    <div style="width: 50%;">
-                    <label for="Crop" style="margin-right: 180px;">Select Crop</label><br>
-                    <select id="Crop" name="Crop" required style="margin-top: 10px;width: 270px;height: 40px;border-radius: 5px;border-color: rgb(193, 190, 190);">
-                        <option value="Sugarcane" >Sugarcane</option>
-                        <option value="Jowar">Jowar</option>
-                        <option value="Cotton" >Cotton</option>
-                        <option value="Rice" >Rice</option>
-                        <option value="Wheat" >Wheat</option>
-                        <option value="Groundnut">Groundnut</option>
-                        <option value="Maize" >Maize</option>
-                        <option value="Tur" >Tur</option>
-                        <option value="Urad" >Urad</option>
-                        <option value="Moong">Moong</option>
-                        <option value="Gram" >Gram</option>
-                        <option value="Masoor" >Masoor</option>
-                        <option value="Ginger">Ginger</option>
-                        <option value="Turmeric">Turmeric</option>
-                        <option value="Grapes" >Grapes</option>
-                    </select>
-                    </div>
-                    </div><br>
-                <button type="submit" style="width: 180px;">Get Recommendation</button>
-            </form>
-        </div>
-        </div>
-        <footer>
-            &copy; 2024 AgroZ | Empowering Farmers for a Sustainable Tomorrow
-            <br />
-            <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a> |
-            <a href="#">Terms of Service</a>
-        </footer>
-
-    <script src="/static/js/script.js" defer></script>
-</body>
 </html>
