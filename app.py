@@ -1,5 +1,6 @@
 from flask import Flask, redirect, render_template, request, redirect, url_for, flash,session,jsonify
 from werkzeug.utils import secure_filename
+import joblib
 import os
 import numpy as np
 import requests
@@ -659,36 +660,42 @@ def predict_fertilizer():
 def chemical_fertilizer_recommendation():
     return render_template('Chemical_Fertilizer.html')
 
-#import model
-with open('model/Fertilizer/xgboost_model.pkl', 'rb') as file:
-    xgboost_model = pickle.load(file)
+model_path = 'model/Fertilizer/1.pkl'
+xgboost_model = joblib.load(model_path)
 
-#import model
-with open('model/Fertilizer/label_encoder.pkl', 'rb') as file:
-    label_encoder = pickle.load(file)
+# Load the label encoders for the crop, and fertilizer
+crop_encoder = joblib.load('model/Fertilizer/crop_encoder.pkl')
+fertilizer_encoder = joblib.load('model/Fertilizer/fertilizer_encoder.pkl')
 
 @app.route('/predictChemicalFertilizer', methods=['POST'])
 def predictChemicalFertilizer():
     try:
-        # Get user input from the form
-        N = int(request.form['N'])
-        P = int(request.form['P'])
-        K = int(request.form['K'])
-        Crop = request.form['Crop']
+        data = request.form
+    
+        # Extract data from the form
+        nitrogen = float(data['N'])
+        phosphorus = float(data['P'])
+        potassium = float(data['K'])
+        ph = float(data['ph'])
+        rainfall = float(data['rainfall'])
+        temperature = float(data['temperature'])
+        Crop = data['Crop']
         
-        # Create a DataFrame with the user input
-        input_data = pd.DataFrame([[N, P, K, Crop]], columns=['N', 'P', 'K', 'Crop'])
-
-        # Make prediction using the loaded model
-        prediction = xgboost_model.predict(input_data)  
-
-        # Decode the numerical prediction to get the fertilizer name
-        predicted_fertilizer = label_encoder.inverse_transform(prediction)[0]
-        fertilizer_predicted = label_encoder.inverse_transform(prediction)
-
+        # Encode the categorical features
+        crop_encoded = crop_encoder.transform([Crop])[0]
+        
+        # Create input array for the model
+        input_features = np.array([[nitrogen, phosphorus, potassium, ph, rainfall, temperature, crop_encoded]])
+        
+        # Make prediction
+        prediction = xgboost_model.predict(input_features)[0]
+        
+        # Decode the prediction
+        fertilizer = fertilizer_encoder.inverse_transform([prediction])[0]
+    
         FERTILIZER_FOLDER = './static/fertilizers'
 
-        image_name = str(predicted_fertilizer) + '.jpg'
+        image_name = str(fertilizer) + '.jpg'
         image_path = os.path.join(FERTILIZER_FOLDER, image_name)
         if os.path.exists(image_path):
         # Pass the image URL to the template
@@ -699,13 +706,13 @@ def predictChemicalFertilizer():
             cursor = conn.cursor()
             # Insert input values, crop name, recommendations, and timestamp into the database table
             cursor.execute("INSERT INTO Chemfertilizer (farmer_id, crop, nitrogen, phosphorus, potassium, recommendation,recommendation_date) VALUES (%s, %s, %s, %s, %s, %s, %s)",
-                        (session['farmer_id'], Crop, N, P, K,str(predicted_fertilizer),date.today()))
+                        (session['farmer_id'], Crop, nitrogen, phosphorus, potassium,str(fertilizer),date.today()))
             conn.commit()
         except Exception as e:
             return f"An error occurred while inserting data into the database: {str(e)}"
 
         # Render the result page with the prediction
-        return render_template('Chemical_Fertilizer_Result.html', prediction_text=fertilizer_predicted[0],image_url=image_url)
+        return render_template('Chemical_Fertilizer_Result.html', prediction_text=fertilizer,image_url=image_url)
     except Exception as e:
         return f"An error occurred: {str(e)}"        
     
