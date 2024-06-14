@@ -76,8 +76,8 @@
                     {% endif %}
                 {% endfor %}
             </table>
-              <a class="edit-profile-link animated-left" href="{{ url_for('edit_profile', farmer_id=farmer_details.farmer_id) }}">Edit Profile</a>
-              <a onclick="confirmdelete()" class="edit-profile-link animated-left" href="{{ url_for('delete', farmer_id=farmer_details.farmer_id) }}">Delete</a>
+              <a class="edit-profile-link" href="{{ url_for('edit_profile', farmer_id=farmer_details.farmer_id) }}">Edit Profile</a>
+              <a onclick="confirmdelete()" class="edit-profile-link" href="{{ url_for('delete', farmer_id=farmer_details.farmer_id) }}">Delete</a>
           </div>
           <!-- Button to trigger printing -->
           <!-- <button onclick="printTable()">Print</button> -->

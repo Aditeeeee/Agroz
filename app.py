@@ -700,7 +700,23 @@ def predictChemicalFertilizer():
         if os.path.exists(image_path):
         # Pass the image URL to the template
            image_url = url_for('static', filename='fertilizers/' + image_name)
-
+        elif image_name == '20:20:20 NPK.jpg':
+           image_url = url_for('static', filename='fertilizers/202020npk.jpg')
+        elif image_name == '10:26:26 NPK.jpg':
+           image_url = url_for('static', filename='fertilizers/10-26-26 NPK.jpg')
+        elif image_name == '13:32:26 NPK.jpg':
+           image_url = url_for('static', filename='fertilizers/13-32-26 NPK.jpg')
+        elif image_name == '12:32:16 NPK.jpg':
+           image_url = url_for('static', filename='fertilizers/12-32-16 NPK.jpg') 
+        elif image_name == '19:19:19 NPK.jpg':
+           image_url = url_for('static', filename='fertilizers/191919npk.jpg')
+        elif image_name == '18:46:0 NPK.jpg':
+           image_url = url_for('static', filename='fertilizers/18460npk.jpg')
+        elif image_name == '10:10:10 NPK.jpg':
+           image_url = url_for('static', filename='fertilizers/101010npk.jpg')
+        elif image_name == '50:26:2 NPK.jpg':
+           image_url = url_for('static', filename='fertilizers/10-26-26 NPK.jpg')      
+            
         try:
          with db_pool.get_connection() as conn:
             cursor = conn.cursor()
