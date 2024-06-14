@@ -721,8 +721,8 @@ def predictChemicalFertilizer():
          with db_pool.get_connection() as conn:
             cursor = conn.cursor()
             # Insert input values, crop name, recommendations, and timestamp into the database table
-            cursor.execute("INSERT INTO Chemfertilizer (farmer_id, crop, nitrogen, phosphorus, potassium, recommendation,recommendation_date) VALUES (%s, %s, %s, %s, %s, %s, %s)",
-                        (session['farmer_id'], Crop, nitrogen, phosphorus, potassium,str(fertilizer),date.today()))
+            cursor.execute("INSERT INTO Chemfertilizer (farmer_id, crop, nitrogen, phosphorus, potassium,ph,temperature,rainfall, recommendation,recommendation_date) VALUES (%s, %s, %s, %s, %s, %s, %s,%s,%s,%s)",
+                        (session['farmer_id'], Crop, nitrogen, phosphorus, potassium,ph,temperature,rainfall,str(fertilizer),date.today()))
             conn.commit()
         except Exception as e:
             return f"An error occurred while inserting data into the database: {str(e)}"
